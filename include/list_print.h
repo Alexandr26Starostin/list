@@ -3,6 +3,8 @@
 
 #include "const_in_list.h"
 
-list_error_t list_print (list_t* ptr_list);
+#ifdef PRINT_LIST
+	list_error_t print_list (list_t* ptr_list);
+#endif
 
 #endif

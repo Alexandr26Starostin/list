@@ -3,7 +3,7 @@
 #include "const_in_list.h"
 #include "list_ctor_dtor.h"
 #include "list_print.h"
-
+#include "list_add_element.h"
 
 int main ()
 {
@@ -17,7 +17,22 @@ int main ()
 		return (int) list.list_error;
 	}
 
-	list_print (&list);
+	print_list (&list);
+
+	if (list_add (&list, 7, 0)) {return (int) list.list_error;}
+	print_list (&list);
+
+	if (list_add (&list, 9, 1)) {return (int) list.list_error;}
+	print_list (&list);
+
+	if (list_add (&list, 17, 2)) {return (int) list.list_error;}
+	print_list (&list);
+
+	if (list_add (&list, -6, 1)) {return (int) list.list_error;}
+	print_list (&list);
+
+	if (list_add (&list, 25, 0)) {return (int) list.list_error;}
+	print_list (&list);
 
 	list_dtor (&list);
 	return (int) list.list_error;

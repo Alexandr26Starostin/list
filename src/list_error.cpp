@@ -12,6 +12,10 @@ list_error_t list_error (list_t* ptr_list, const char* file, int line)
 {
 	assert (ptr_list);
 	assert (file);
+	// if (ptr_list -> free == 0)
+	// {
+	// 	ptr_list -> list_error |= 
+	// }
 
 	list_error_t status = ptr_list -> list_error; 
 
@@ -49,11 +53,12 @@ static long print_error (long danger_bit)
 {
 	switch (danger_bit)
 	{
-		case DATA_NULL:           	 {printf ("pointer on data  == NULL;                                     code_error == %ld\n", danger_bit);     break;}
-		case NEXT_NULL:           	 {printf ("pointer on next  == NULL;                                     code_error == %ld\n", danger_bit);     break;}
-		case PREV_NULL:           	 {printf ("pointer on prev  == NULL;                                     code_error == %ld\n", danger_bit);     break;}
+		case DATA_NULL:           	 {printf ("pointer on data  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
+		case NEXT_NULL:           	 {printf ("pointer on next  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
+		case PREV_NULL:           	 {printf ("pointer on prev  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
+		case PREV_MORE_COUNT:        {printf ("when program add new element after prev_element: index prev_element > count elements in list;       code_error == %ld\n", danger_bit);     break;}
 
-		default:                 	 {printf ("this error not find: %ld\n",                                                        danger_bit);     break;}
+		default:                 	 {printf ("this error not find: %ld\n",                                                                                              danger_bit);     break;}
 	}
 
 	return danger_bit;

@@ -1,6 +1,8 @@
 #ifndef CONST_IN_LIST_H
 #define CONST_IN_LIST_H
 
+#define PRINT_LIST
+
 typedef long   data_t;
 typedef long   next_t;
 typedef long   prev_t;
@@ -8,6 +10,7 @@ typedef long   prev_t;
 typedef size_t head_t;
 typedef size_t tail_t;
 typedef size_t free_t;
+typedef size_t count_t;
 
 typedef long   list_error_t;
 
@@ -21,6 +24,7 @@ struct list_t
 	head_t       head;
 	tail_t       tail;
 	free_t       free;
+	count_t      count;
 
 	list_error_t list_error;
 };
@@ -29,10 +33,11 @@ struct list_t
 
 enum error_t
 {
-	NOT_ERROR = 0,
-	DATA_NULL = 1,
-	NEXT_NULL = 2,
-	PREV_NULL = 4
+	NOT_ERROR       = 0,
+	DATA_NULL       = 1,
+	NEXT_NULL       = 2,
+	PREV_NULL       = 4,
+	PREV_MORE_COUNT = 8
 };
 
 //--------------------------------------------------------------------------------------------------------
