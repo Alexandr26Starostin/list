@@ -3,7 +3,7 @@
 
 #include "list_error.h"
 
-static list_error_t verifier    (long status, const char* file, int line);
+static list_error_t verifier    (list_error_t status, const char* file, int line);
 static long         print_error (long danger_bit);
 
 //--------------------------------------------------------------------------------------------------------
@@ -13,7 +13,7 @@ list_error_t list_error (list_t* ptr_list, const char* file, int line)
 	assert (ptr_list);
 	assert (file);
 
-	long status = ptr_list -> list_error; 
+	list_error_t status = ptr_list -> list_error; 
 
 	if (status)
 	{
@@ -25,7 +25,7 @@ list_error_t list_error (list_t* ptr_list, const char* file, int line)
 
 //---------------------------------------------------------------------------------------------------------
 
-static list_error_t verifier (long status, const char* file, int line)
+static list_error_t verifier (list_error_t status, const char* file, int line)
 {
 	assert (file);
 
