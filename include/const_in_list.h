@@ -39,6 +39,7 @@ enum error_t
 
 const size_t MAX_BIT   = sizeof (list_error_t);
 
+const size_t SIZE_LIST = 16;
 const size_t SIZE_DATA = 16;
 const size_t SIZE_NEXT = 16;
 const size_t SIZE_PREV = 16;

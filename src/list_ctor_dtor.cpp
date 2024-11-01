@@ -22,7 +22,7 @@ list_error_t list_ctor (list_t* ptr_list)
 	if (ptr_list -> prev == NULL) {ptr_list -> list_error |= PREV_NULL;}
 
 	ptr_list -> head = 1;
-	ptr_list -> tail = 1;
+	ptr_list -> tail = 0;
 	ptr_list -> free = 1;
 
 	if (list_error (ptr_list, __FILE__, __LINE__))
@@ -64,9 +64,9 @@ list_error_t list_dtor (list_t* ptr_list)
 	free (ptr_list -> next);
 	free (ptr_list -> prev);
 
-	ptr_list -> head = 0;
+	ptr_list -> head = 1;
 	ptr_list -> tail = 0;
-	ptr_list -> free = 0;
+	ptr_list -> free = 1;
 
 	return ptr_list -> list_error;
 }
