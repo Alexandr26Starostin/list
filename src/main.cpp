@@ -4,6 +4,7 @@
 #include "list_ctor_dtor.h"
 #include "list_print.h"
 #include "list_add_element.h"
+#include "list_remove_element.h"
 
 int main ()
 {
@@ -32,6 +33,9 @@ int main ()
 	print_list (&list);
 
 	if (list_add (&list, 25, 0)) {return (int) list.list_error;}
+	print_list (&list);
+
+	if (list_remove (&list, 2)) {return (int) list.list_error;}
 	print_list (&list);
 
 	list_dtor (&list);

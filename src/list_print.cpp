@@ -25,7 +25,7 @@
 		printf ("\n");
 
 		printf ("next: ");
-		for (size_t index_next = 0; index_next < SIZE_DATA; index_next++)
+		for (size_t index_next = 0; index_next < SIZE_NEXT; index_next++)
 		{
 			printf ("%4ld ", (ptr_list -> next)[index_next]);
 		}
@@ -38,10 +38,18 @@
 		}
 		printf ("\n\n");
 
-		printf ("head  == %ld\n\n", ptr_list -> head);
-		printf ("tail  == %ld\n\n", ptr_list -> tail);
+		printf ("head  == %ld\n\n", (ptr_list -> next)[0]);
+		printf ("tail  == %ld\n\n", (ptr_list -> prev)[0]);
 		printf ("free  == %ld\n\n", ptr_list -> free);
 		printf ("count == %ld\n\n", ptr_list -> count);
+
+		printf ("communications: ");
+		for (size_t index_next = (ptr_list -> next)[0]; index_next != 0; index_next = (ptr_list -> next)[index_next])
+		{
+			printf ("%4ld -> ", index_next);
+		}
+		printf ("\n\n");
+
 		printf ("--------------------------------------------------------------------------------\n\n");
 
 		getchar ();

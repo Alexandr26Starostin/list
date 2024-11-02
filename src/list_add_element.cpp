@@ -25,16 +25,6 @@ list_error_t list_add (list_t* ptr_list, data_t element, size_t index_prev_eleme
 	(ptr_list -> next)[ptr_list -> free] = old_next;
 	(ptr_list -> prev)[ptr_list -> free] = index_prev_element;
 
-	if (index_prev_element == ptr_list -> tail)
-	{
-		ptr_list -> tail = ptr_list -> free;
-	}
-
-	if (index_prev_element == 0)
-	{
-		ptr_list -> head   = ptr_list -> free;
-	}
-
 	ptr_list -> free   = next_free;
 	ptr_list -> count += 1;
 

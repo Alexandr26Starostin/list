@@ -21,11 +21,6 @@ list_error_t list_ctor (list_t* ptr_list)
 	ptr_list -> prev = (prev_t*) calloc (SIZE_PREV, sizeof (prev_t));
 	if (ptr_list -> prev == NULL) {ptr_list -> list_error |= PREV_NULL;}
 
-	ptr_list -> head  = 0;
-	ptr_list -> tail  = 1;
-	ptr_list -> free  = 1;
-	ptr_list -> count = 0;
-
 	if (list_error (ptr_list, __FILE__, __LINE__))
 	{
 		return ptr_list -> list_error;
@@ -33,7 +28,13 @@ list_error_t list_ctor (list_t* ptr_list)
 
 	//-------------------------------------------------------------------------------------------
 
+	ptr_list -> free  = 1;
+	ptr_list -> count = 0;
+
 	(ptr_list -> data)[0] = POISON;
+	(ptr_list -> next)[0] = HEAD_IN_BEGINNING;     
+	(ptr_list -> prev)[0] = TAIL_IN_BEGINNING;
+
 	for (size_t index_data = 1; index_data < SIZE_DATA; index_data++)
 	{
 		(ptr_list -> data)[index_data] = FREE_VALUE;
@@ -65,10 +66,10 @@ list_error_t list_dtor (list_t* ptr_list)
 	free (ptr_list -> next);
 	free (ptr_list -> prev);
 
-	ptr_list -> head  = 0;
-	ptr_list -> tail  = 1;
-	ptr_list -> free  = 1;
-	ptr_list -> count = 0;
+	(ptr_list -> next)[0] = HEAD_IN_BEGINNING;     
+	(ptr_list -> prev)[0] = TAIL_IN_BEGINNING;
+	ptr_list -> free      = 1;
+	ptr_list -> count     = 0;
 
 	return ptr_list -> list_error;
 }

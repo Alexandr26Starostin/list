@@ -17,6 +17,18 @@ list_error_t list_error (list_t* ptr_list, const char* file, int line)
 	// 	ptr_list -> list_error |= 
 	// }
 
+	size_t index_prev = 0;
+	for (size_t index_next = (ptr_list -> next)[0]; index_next != 0; index_next = (ptr_list -> next)[index_next])
+	{
+		index_prev = (ptr_list -> prev)[index_next];
+
+		if (index_next != (size_t) (ptr_list -> next)[index_prev])
+		{
+			printf ("wrong communications with elements: %4ld <-> %4ld  (index_prev <-> index_next)\n", index_prev, index_next);
+			ptr_list -> list_error |= ERROR_IN_COMMUNICATIONS;
+		}
+	}
+
 	list_error_t status = ptr_list -> list_error; 
 
 	if (status)
@@ -53,12 +65,14 @@ static long print_error (long danger_bit)
 {
 	switch (danger_bit)
 	{
-		case DATA_NULL:           	 {printf ("pointer on data  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
-		case NEXT_NULL:           	 {printf ("pointer on next  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
-		case PREV_NULL:           	 {printf ("pointer on prev  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
-		case PREV_MORE_COUNT:        {printf ("when program add new element after prev_element: index prev_element > count elements in list;       code_error == %ld\n", danger_bit);     break;}
+		case DATA_NULL:               {printf ("pointer on data  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
+		case NEXT_NULL:               {printf ("pointer on next  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
+		case PREV_NULL:               {printf ("pointer on prev  == NULL;                                                                           code_error == %ld\n", danger_bit);     break;}
+		case PREV_MORE_COUNT:         {printf ("when program add new element after prev_element: index prev_element > count elements in list;       code_error == %ld\n", danger_bit);     break;}
+		case REMOVE_NULL:             {printf ("can not remove element with index == 0;                                                             code_error == %ld\n", danger_bit);     break;}
+		case ERROR_IN_COMMUNICATIONS: {printf ("wrong communications with elements                                                                  code_error == %ld\n", danger_bit);     break;}
 
-		default:                 	 {printf ("this error not find: %ld\n",                                                                                              danger_bit);     break;}
+		default:               {printf ("this error not find: %ld\n",                                                                                              danger_bit);     break;}
 	}
 
 	return danger_bit;

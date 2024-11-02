@@ -7,8 +7,6 @@ typedef long   data_t;
 typedef long   next_t;
 typedef long   prev_t;
 
-typedef size_t head_t;
-typedef size_t tail_t;
 typedef size_t free_t;
 typedef size_t count_t;
 
@@ -21,8 +19,6 @@ struct list_t
 	next_t*      next;
 	prev_t*      prev;
 
-	head_t       head;
-	tail_t       tail;
 	free_t       free;
 	count_t      count;
 
@@ -33,11 +29,13 @@ struct list_t
 
 enum error_t
 {
-	NOT_ERROR       = 0,
-	DATA_NULL       = 1,
-	NEXT_NULL       = 2,
-	PREV_NULL       = 4,
-	PREV_MORE_COUNT = 8
+	NOT_ERROR               = 0,
+	DATA_NULL               = 1,
+	NEXT_NULL               = 2,
+	PREV_NULL               = 4,
+	PREV_MORE_COUNT         = 8,
+	REMOVE_NULL             = 16,
+	ERROR_IN_COMMUNICATIONS = 32
 };
 
 //--------------------------------------------------------------------------------------------------------
@@ -48,6 +46,9 @@ const size_t SIZE_LIST = 16;
 const size_t SIZE_DATA = 16;
 const size_t SIZE_NEXT = 16;
 const size_t SIZE_PREV = 16;
+
+const size_t HEAD_IN_BEGINNING = 0;
+const size_t TAIL_IN_BEGINNING = 1;
 
 const long POISON     = -666;
 const long FREE_VALUE = -1;
