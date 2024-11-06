@@ -36,14 +36,15 @@ digraph
 
 		names_list [shape=record, label=" index | data | next | prev "]
 
+		name0 [shape=record, label="<f0>    0 | -666 |    5 |    3 "]
 		name5 [shape=record, label="<f5>    5 |   25 |    1 |    0 "]
 		name1 [shape=record, label="<f1>    1 |    7 |    4 |    5 "]
 		name4 [shape=record, label="<f4>    4 |   -6 |    3 |    1 "]
 		name3 [shape=record, label="<f3>    3 |   17 |    0 |    4 "]
 		
-		name5:<f5> -> name1:<f1> -> name4:<f4> -> name3:<f3> [penwidth = 6.0, color="white"]
-		name5:<f5> -> name1:<f1> -> name4:<f4> -> name3:<f3> 
-		name3 -> name5
-		list -> names_list -> name5 [penwidth = 6.0, color="white"]
+		name0:<f0> -> name5:<f5> -> name1:<f1> -> name4:<f4> -> name3:<f3> [penwidth = 6.0, color="white"]
+		name0:<f0> -> name5:<f5> -> name1:<f1> -> name4:<f4> -> name3:<f3> 
+		name3 -> name0
+		list -> names_list -> name0 [penwidth = 6.0, color="white"]
 	}
 }

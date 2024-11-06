@@ -1,8 +1,6 @@
 #ifndef CONST_IN_LIST_H
 #define CONST_IN_LIST_H
 
-#define PRINT_LIST
-
 typedef long   data_t;
 typedef long   next_t;
 typedef long   prev_t;
@@ -37,7 +35,8 @@ enum error_t
 	REMOVE_NULL             = 16,
 	ERROR_IN_COMMUNICATIONS = 32,
 	NOT_FIND_DUMP_FILE      = 64,
-	FEW_FILES               = 128
+	FEW_FILES               = 128,
+	NOT_FIND_LIST_DOT       = 256
 };
 
 //--------------------------------------------------------------------------------------------------------

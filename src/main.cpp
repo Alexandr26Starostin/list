@@ -4,22 +4,22 @@
 #include "list_ctor_dtor.h"
 #include "list_print.h"
 #include "list_operations.h"
-#include "read_file_in_list.h"
 
 #define ADD_IN_LIST_(element, position) \
 	if (list_add (&list, element, position)) {return (int) list.list_error;} \
-	print_list (&list);         
-	//list_dump  (&list, dump_file);         
+	print_list (&list);                 \
+	status = list_dump (&list, dump_file); \
+	if (status) {return status;}        
 
 #define REMOVE_FROM_LIST_(position) \
 	if (list_remove (&list, position)) {return (int) list.list_error;} \
-	print_list (&list);         
-	//list_dump  (&list, dump_file);         
+	status = list_dump (&list, dump_file); \
+	if (status) {return status;}     
 
-int main (int argc, char** argv) 
+//-------------------------------------------------------------------------------------------------     
+
+int main () 
 {
-	printf ("Hello, I'm list)))\n");
-
 	list_t list = {};
 
 	if (list_ctor (&list))
@@ -28,10 +28,12 @@ int main (int argc, char** argv)
 		return (int) list.list_error;
 	}
 
-	FILE* dump_file    = NULL;
-	if (error_t status = read_file (argc, argv, &dump_file)) {return status;}
+	FILE* dump_file = NULL;
+	error_t status = NOT_ERROR;
 
 	print_list (&list);
+	status = list_dump (&list, dump_file); 
+	if (status) {return status;}
 
 	ADD_IN_LIST_(7,  0)
 	ADD_IN_LIST_(9,  1)
@@ -41,9 +43,6 @@ int main (int argc, char** argv)
 	
 	REMOVE_FROM_LIST_(2)
 
-	list_dump  (&list, dump_file);
-
 	list_dtor (&list);
-	fclose    (dump_file);
 	return (int) list.list_error;
 }
