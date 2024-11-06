@@ -36,7 +36,9 @@ enum error_t
 	ERROR_IN_COMMUNICATIONS = 32,
 	NOT_FIND_DUMP_FILE      = 64,
 	FEW_FILES               = 128,
-	NOT_FIND_LIST_DOT       = 256
+	NOT_FIND_LIST_DOT       = 256,
+	LIST_FULL               = 512,
+	NOT_ELEMENTS_IN_LIST    = 1024
 };
 
 //--------------------------------------------------------------------------------------------------------

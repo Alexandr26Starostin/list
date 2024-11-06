@@ -15,6 +15,13 @@ list_error_t list_add (list_t* ptr_list, data_t element, size_t index_prev_eleme
 		return ptr_list -> list_error;
 	}
 
+	if (ptr_list -> free == 0)
+	{
+		ptr_list -> list_error |= LIST_FULL;
+		list_error (ptr_list, __FILE__, __LINE__);
+		return ptr_list -> list_error;
+	}
+
 	free_t next_free = (ptr_list -> next)[ptr_list -> free];
 	
 	size_t old_next                        = (ptr_list -> next)[index_prev_element];  
@@ -35,6 +42,13 @@ list_error_t list_add (list_t* ptr_list, data_t element, size_t index_prev_eleme
 list_error_t list_remove (list_t* ptr_list, size_t index_remote_element)
 {
 	assert (ptr_list);
+
+	if ((ptr_list -> next)[0] == 0)
+	{
+		ptr_list -> list_error |= NOT_ELEMENTS_IN_LIST;
+		list_error (ptr_list, __FILE__, __LINE__);
+		return ptr_list -> list_error;
+	}
 
 	if (index_remote_element == 0)
 	{

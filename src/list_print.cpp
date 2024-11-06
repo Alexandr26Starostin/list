@@ -3,12 +3,18 @@
 #include <stdlib.h>
 
 #include "const_in_list.h"
+#include "list_error.h"
 #include "list_print.h"
 
 
 list_error_t print_list (list_t* ptr_list)
 {
 	assert (ptr_list);
+
+	if (list_error (ptr_list, __FILE__, __LINE__))
+	{
+		return ptr_list -> list_error;
+	}
 
 	printf ("      ");
 
@@ -61,6 +67,11 @@ list_error_t print_list (list_t* ptr_list)
 error_t list_dump (list_t* ptr_list, FILE* dump_file)
 {
 	assert (ptr_list);
+
+	if (list_error (ptr_list, __FILE__, __LINE__))
+	{
+		return (error_t) ptr_list -> list_error;
+	}
 
 	dump_file = fopen ("list.dot", "w");
 	if (dump_file == NULL) {printf ("Not find list.dot\n"); return NOT_FIND_LIST_DOT;}
