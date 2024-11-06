@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
 
 #include "const_in_list.h"
 #include "list_print.h"
@@ -40,8 +41,8 @@
 
 		printf ("head  == %ld\n\n", (ptr_list -> next)[0]);
 		printf ("tail  == %ld\n\n", (ptr_list -> prev)[0]);
-		printf ("free  == %ld\n\n", ptr_list -> free);
-		printf ("count == %ld\n\n", ptr_list -> count);
+		printf ("free  == %ld\n\n", ptr_list  -> free);
+		printf ("count == %ld\n\n", ptr_list  -> count);
 
 		printf ("communications: ");
 		for (size_t index_next = (ptr_list -> next)[0]; index_next != 0; index_next = (ptr_list -> next)[index_next])
@@ -51,6 +52,80 @@
 		printf ("\n\n");
 
 		printf ("--------------------------------------------------------------------------------\n\n");
+
+		return ptr_list -> list_error;
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	list_error_t list_dump (list_t* ptr_list, FILE* dump_file)
+	{
+		assert (ptr_list);
+		assert (dump_file);
+
+		fprintf (dump_file, "digraph\n{\n\trankdir = LR;\n\tnode[fontsize=9];\n\tedge[color=\"green\",fontsize=12]\n\n\t"
+							"subgraph\n\t{\n\t\tfree [shape=\"rectangle\", color = \"green\"]\n\n\t\t"
+							"names_free [shape=record, label=\" index | data | next | prev \"]\n\n\t\t"); 
+
+		for	(size_t index_next = (ptr_list -> free); index_next != 0; index_next = (ptr_list -> next)[index_next])
+		{
+			fprintf (dump_file, "name%ld [shape=record, label=\"<f%ld> %4ld | %4ld | %4ld | %4ld \"]\n\t\t", 
+				index_next, index_next, index_next, (ptr_list -> data)[index_next], (ptr_list -> next)[index_next], (ptr_list -> prev)[index_next]);
+		}
+
+		fprintf (dump_file, "\n\t\tname%ld:<f%ld> ", (ptr_list -> free), (ptr_list -> free));
+
+		for	(size_t index_next = (ptr_list -> next)[(ptr_list -> free)]; index_next != 0; index_next = (ptr_list -> next)[index_next])
+		{
+			fprintf (dump_file, "-> name%ld:<f%ld> ", index_next, index_next);
+		}
+
+		fprintf (dump_file, "[penwidth = 6.0, color=\"white\"]\n\t\t");
+
+		fprintf (dump_file, "name%ld:<f%ld> ", (ptr_list -> free), (ptr_list -> free));
+
+		for	(size_t index_next = (ptr_list -> next)[(ptr_list -> free)]; index_next != 0; index_next = (ptr_list -> next)[index_next])
+		{
+			fprintf (dump_file, "-> name%ld:<f%ld> ", index_next, index_next);
+		}
+
+		fprintf (dump_file, "\n\n\t\tfree -> names_free -> name%ld [penwidth = 6.0, color=\"white\"]\n\t}\n\n\t", (ptr_list -> free));
+
+		//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		fprintf (dump_file, "edge[color=\"red\",fontsize=12]\n\n\t"
+							"subgraph\n\t{\n\t\tlist [shape=\"rectangle\", color = \"red\"]\n\n\t\t"
+							"names_list [shape=record, label=\" index | data | next | prev \"]\n\n\t\t"); 
+
+		for	(size_t index_next = (ptr_list -> next)[0]; index_next != 0; index_next = (ptr_list -> next)[index_next])
+		{
+			fprintf (dump_file, "name%ld [shape=record, label=\"<f%ld> %4ld | %4ld | %4ld | %4ld \"]\n\t\t", 
+				index_next, index_next, index_next, (ptr_list -> data)[index_next], (ptr_list -> next)[index_next], (ptr_list -> prev)[index_next]);
+		}
+
+		fprintf (dump_file, "\n\t\tname%ld:<f%ld> ", (ptr_list -> next)[0], (ptr_list -> next)[0]);
+
+		for	(size_t index_next = (ptr_list -> next)[(ptr_list -> next)[0]]; index_next != 0; index_next = (ptr_list -> next)[index_next])
+		{
+			fprintf (dump_file, "-> name%ld:<f%ld> ", index_next, index_next);
+		}
+
+		fprintf (dump_file, "[penwidth = 6.0, color=\"white\"]\n\t\t");
+
+		fprintf (dump_file, "name%ld:<f%ld> ", (ptr_list -> next)[0], (ptr_list -> next)[0]);
+
+		for	(size_t index_next = (ptr_list -> next)[(ptr_list -> next)[0]]; index_next != 0; index_next = (ptr_list -> next)[index_next])
+		{
+			fprintf (dump_file, "-> name%ld:<f%ld> ", index_next, index_next);
+		}
+
+		fprintf (dump_file, "\n\t\tname%ld -> name%ld\n\t\t", (ptr_list -> prev)[0], (ptr_list -> next)[0]);
+
+		fprintf (dump_file, "list -> names_list -> name%ld [penwidth = 6.0, color=\"white\"]\n\t}\n}", (ptr_list -> next)[0]);
+
+		//--------------------------------------------------------------------------------------------------------------------------------------------------
+
+		system ("dot list.dot -Tpng -o list.png");
 
 		getchar ();
 

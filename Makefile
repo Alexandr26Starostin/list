@@ -1,6 +1,6 @@
 CC=g++
 FLAGS=-Iinclude -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-equal -Winline -Wunreachable-code -Wmissing-declarations -Wmissing-include-dirs -Wswitch-enum -Wswitch-default -Weffc++ -Wmain -Wextra -Wall -g -pipe -fexceptions -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wempty-body -Wformat-security -Wformat=2 -Wignored-qualifiers -Wlogical-op -Wmissing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing -Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -D_DEBUG -D_EJUDGE_CLIENT_SIDE -D_EJC
-FILES=main.o list_error.o list_ctor_dtor.o list_print.o list_add_element.o list_remove_element.o
+FILES=main.o list_error.o list_ctor_dtor.o list_print.o list_operations.o read_file_in_list.o
 
 TARGET = list
 # pathsub
@@ -30,11 +30,11 @@ list_ctor_dtor.o: src/list_ctor_dtor.cpp
 list_print.o: src/list_print.cpp
 	@$(CC) -c $(FLAGS) src/list_print.cpp -o build/list_print.o
 
-list_add_element.o: src/list_add_element.cpp
-	@$(CC) -c $(FLAGS) src/list_add_element.cpp -o build/list_add_element.o
+list_operations.o: src/list_operations.cpp
+	@$(CC) -c $(FLAGS) src/list_operations.cpp -o build/list_operations.o
 
-list_remove_element.o: src/list_remove_element.cpp
-	@$(CC) -c $(FLAGS) src/list_remove_element.cpp -o build/list_remove_element.o
+read_file_in_list.o: src/read_file_in_list.cpp
+	@$(CC) -c $(FLAGS) src/read_file_in_list.cpp -o build/read_file_in_list.o
 
 clean:
 	rm -rf $(TARGET)

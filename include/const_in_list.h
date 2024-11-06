@@ -35,7 +35,9 @@ enum error_t
 	PREV_NULL               = 4,
 	PREV_MORE_COUNT         = 8,
 	REMOVE_NULL             = 16,
-	ERROR_IN_COMMUNICATIONS = 32
+	ERROR_IN_COMMUNICATIONS = 32,
+	NOT_FIND_DUMP_FILE      = 64,
+	FEW_FILES               = 128
 };
 
 //--------------------------------------------------------------------------------------------------------
@@ -52,5 +54,8 @@ const size_t TAIL_IN_BEGINNING = 1;
 
 const long POISON     = -666;
 const long FREE_VALUE = -1;
+
+const size_t SIZE_FLAG          = 2;
+const size_t MAX_SIZE_NAME_FILE = 32;
 
 #endif
