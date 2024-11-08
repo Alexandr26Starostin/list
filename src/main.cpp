@@ -8,12 +8,12 @@
 #define ADD_IN_LIST_(element, position) \
 	if (list_add (&list, element, position)) {return (int) list.list_error;} \
 	print_list (&list);                 \
-	status = list_dump (&list, dump_file); \
+	status = list_dump (&list, "Add", (list.next)[position]); \
 	if (status) {return status;}        
 
 #define REMOVE_FROM_LIST_(position) \
 	if (list_remove (&list, position)) {return (int) list.list_error;} \
-	status = list_dump (&list, dump_file); \
+	status = list_dump (&list, "Remove", position); \
 	if (status) {return status;}     
 
 //-------------------------------------------------------------------------------------------------     
@@ -28,11 +28,10 @@ int main ()
 		return (int) list.list_error;
 	}
 
-	FILE* dump_file = NULL;
 	error_t status = NOT_ERROR;
 
 	print_list (&list);
-	status = list_dump (&list, dump_file); 
+	status = list_dump (&list, "Add", 0); 
 	if (status) {return status;}
 
 	ADD_IN_LIST_(7,  0)

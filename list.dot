@@ -6,11 +6,11 @@ digraph
 
 	subgraph
 	{
-		free [shape="rectangle", color = "green"]
+		communications_in_free [shape="rectangle", color = "green", style="filled",fillcolor="lightgreen"]
 
-		names_free [shape=record, label=" index | data | next | prev "]
+		names_free [shape=record, label=" index | data | next | prev ", style="filled",fillcolor="yellow"]
 
-		name2 [shape=record, label="<f2>    2 |   -1 |    6 |   -1 "]
+		name2 [shape=record, label="<f2>    2 |   -1 |    6 |   -1 ", style="filled",fillcolor="violet"]
 		name6 [shape=record, label="<f6>    6 |   -1 |    7 |   -1 "]
 		name7 [shape=record, label="<f7>    7 |   -1 |    8 |   -1 "]
 		name8 [shape=record, label="<f8>    8 |   -1 |    9 |   -1 "]
@@ -25,16 +25,16 @@ digraph
 		name2:<f2> -> name6:<f6> -> name7:<f7> -> name8:<f8> -> name9:<f9> -> name10:<f10> -> name11:<f11> -> name12:<f12> -> name13:<f13> -> name14:<f14> -> name15:<f15> [penwidth = 6.0, color="white"]
 		name2:<f2> -> name6:<f6> -> name7:<f7> -> name8:<f8> -> name9:<f9> -> name10:<f10> -> name11:<f11> -> name12:<f12> -> name13:<f13> -> name14:<f14> -> name15:<f15> 
 
-		free -> names_free -> name2 [penwidth = 6.0, color="white"]
+		communications_in_free -> names_free -> name2 [penwidth = 6.0, color="white"]
 	}
 
 	edge[color="red",fontsize=12]
 
 	subgraph
 	{
-		list [shape="rectangle", color = "red"]
+		communications_in_list [shape="rectangle", color = "red", style="filled",fillcolor="red"]
 
-		names_list [shape=record, label=" index | data | next | prev "]
+		names_list [shape=record, label=" index | data | next | prev ", style="filled",fillcolor="yellow"]
 
 		name0 [shape=record, label="<f0>    0 | -666 |    5 |    3 "]
 		name5 [shape=record, label="<f5>    5 |   25 |    1 |    0 "]
@@ -45,6 +45,59 @@ digraph
 		name0:<f0> -> name5:<f5> -> name1:<f1> -> name4:<f4> -> name3:<f3> [penwidth = 6.0, color="white"]
 		name0:<f0> -> name5:<f5> -> name1:<f1> -> name4:<f4> -> name3:<f3> 
 		name3 -> name0
-		list -> names_list -> name0 [penwidth = 6.0, color="white"]
+		communications_in_list -> names_list -> name0 [penwidth = 15.0, color="white"]
 	}
+
+	edge[color="white",fontsize=12]
+
+	subgraph
+	{
+		header [shape=record, label="<f0> head | <f1> tail | <f2> free", style="filled",fillcolor="lightblue"]
+	}
+		edge[color="blue",fontsize=12]
+
+	subgraph
+	{
+		header:<f0> -> name_ph5
+	header:<f1> -> name_ph3
+	header:<f2> -> name_ph2
+	}
+
+	edge[color="white",fontsize=12]
+
+	subgraph
+	{
+		physical_list [shape="rectangle", color = "black"]
+
+		names_physical_list [shape=record, label=" index | data | next | prev ", style="filled",fillcolor="yellow"]
+
+		name_ph0 [shape=record, label="<f0>    0 | -666 |    5 |    3 ", style="filled",fillcolor="red"]
+		name_ph1 [shape=record, label="<f1>    1 |    7 |    4 |    5 ", style="filled",fillcolor="red"]
+		name_ph2 [shape=record, label="<f2>    2 |   -1 |    6 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph3 [shape=record, label="<f3>    3 |   17 |    0 |    4 ", style="filled",fillcolor="red"]
+		name_ph4 [shape=record, label="<f4>    4 |   -6 |    3 |    1 ", style="filled",fillcolor="red"]
+		name_ph5 [shape=record, label="<f5>    5 |   25 |    1 |    0 ", style="filled",fillcolor="red"]
+		name_ph6 [shape=record, label="<f6>    6 |   -1 |    7 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph7 [shape=record, label="<f7>    7 |   -1 |    8 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph8 [shape=record, label="<f8>    8 |   -1 |    9 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph9 [shape=record, label="<f9>    9 |   -1 |   10 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph10 [shape=record, label="<f10>   10 |   -1 |   11 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph11 [shape=record, label="<f11>   11 |   -1 |   12 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph12 [shape=record, label="<f12>   12 |   -1 |   13 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph13 [shape=record, label="<f13>   13 |   -1 |   14 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph14 [shape=record, label="<f14>   14 |   -1 |   15 |   -1 ", style="filled",fillcolor="lightgreen"]
+		name_ph15 [shape=record, label="<f15>   15 |   -1 |    0 |   -1 ", style="filled",fillcolor="lightgreen"]
+		
+		name_ph0:<f0> -> name_ph0:<f0> -> name_ph1:<f1> -> name_ph2:<f2> -> name_ph3:<f3> -> name_ph4:<f4> -> name_ph5:<f5> -> name_ph6:<f6> -> name_ph7:<f7> -> name_ph8:<f8> -> name_ph9:<f9> -> name_ph10:<f10> -> name_ph11:<f11> -> name_ph12:<f12> -> name_ph13:<f13> -> name_ph14:<f14> -> name_ph15:<f15> 
+		physical_list -> names_physical_list -> name_ph0
+	}
+
+	edge[color="white",fontsize=12]
+
+	subgraph
+	{
+		Remove_element[shape="rectangle", color = "orange", style="filled",fillcolor="orange"]
+	}
+
+	
 }

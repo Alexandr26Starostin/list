@@ -5,6 +5,5 @@
 
 
 list_error_t print_list (list_t* ptr_list);
-error_t list_dump  (list_t* ptr_list, FILE* dump_file);
-
+error_t      list_dump  (list_t* ptr_list, const char* operation, size_t target);
 #endif

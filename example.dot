@@ -3,6 +3,7 @@ digraph
 	rankdir = LR;
 	node[fontsize=9];
 	edge[color="green",fontsize=12];
+	shape="rectangle"
 
 	subgraph
 	{
