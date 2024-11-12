@@ -7,67 +7,70 @@
 #include "list_print.h"
 
 
-list_error_t print_list (list_t* ptr_list)
+list_error_t print_list (list_t* ptr_list, FILE* file)
 {
 	assert (ptr_list);
+	assert (file);
 
 	if (list_error (ptr_list, __FILE__, __LINE__))
 	{
 		return ptr_list -> list_error;
 	}
 
-	printf ("      ");
+	fprintf (file, "      ");
 
 	for (size_t index_list = 0; index_list < SIZE_LIST; index_list++)
 	{
-		printf ("%4ld ", index_list);
+		fprintf (file, "%4ld ", index_list);
 	}
-	printf ("\n");
+	fprintf (file, "\n");
 
-	printf ("data: ");
+	fprintf (file, "data: ");
 	for (size_t index_data = 0; index_data < SIZE_DATA; index_data++)
 	{
-		printf ("%4ld ", (ptr_list -> data)[index_data]);
+		fprintf (file, "%4ld ", (ptr_list -> data)[index_data]);
 	}
-	printf ("\n");
+	fprintf (file, "\n");
 
-	printf ("next: ");
+	fprintf (file, "next: ");
 	for (size_t index_next = 0; index_next < SIZE_NEXT; index_next++)
 	{
-		printf ("%4ld ", (ptr_list -> next)[index_next]);
+		fprintf (file, "%4ld ", (ptr_list -> next)[index_next]);
 	}
-	printf ("\n");
+	fprintf (file, "\n");
 
-	printf ("prev: ");
+	fprintf (file, "prev: ");
 	for (size_t index_prev = 0; index_prev < SIZE_PREV; index_prev++)
 	{
-		printf ("%4ld ", (ptr_list -> prev)[index_prev]);
+		fprintf (file, "%4ld ", (ptr_list -> prev)[index_prev]);
 	}
-	printf ("\n\n");
+	fprintf (file, "\n\n");
 
-	printf ("head  == %ld\n\n", (ptr_list -> next)[0]);
-	printf ("tail  == %ld\n\n", (ptr_list -> prev)[0]);
-	printf ("free  == %ld\n\n", ptr_list  -> free);
-	printf ("count == %ld\n\n", ptr_list  -> count);
+	fprintf (file, "head  == %ld\n\n", (ptr_list -> next)[0]);
+	fprintf (file, "tail  == %ld\n\n", (ptr_list -> prev)[0]);
+	fprintf (file, "free  == %ld\n\n", ptr_list  -> free);
+	fprintf (file, "count == %ld\n\n", ptr_list  -> count);
 
-	printf ("communications: ");
+	fprintf (file, "communications: ");
 	for (size_t index_next = (ptr_list -> next)[0]; index_next != 0; index_next = (ptr_list -> next)[index_next])
 	{
-	printf ("%4ld -> ", index_next);
+	fprintf (file, "%4ld -> ", index_next);
 	}
-	printf ("\n\n");
+	fprintf (file, "\n\n");
 
-	printf ("--------------------------------------------------------------------------------\n\n");
+	fprintf (file, "--------------------------------------------------------------------------------\n\n");
 
 	return ptr_list -> list_error;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-error_t list_dump (list_t* ptr_list, const char* operation, size_t target)
+error_t list_dump (list_t* ptr_list, const char* operation, size_t target, char* str_for_system, FILE* file)
 {
 	assert (ptr_list);
 	assert (operation);
+	assert (str_for_system);
+	assert (file);
 
 	if (list_error (ptr_list, __FILE__, __LINE__))
 	{
@@ -209,9 +212,41 @@ error_t list_dump (list_t* ptr_list, const char* operation, size_t target)
 
 	fclose (dump_file);
 
-	getchar ();
+	//getchar ();
 
-	system ("dot list.dot -Tpng -o list.png");
+	system (str_for_system);
+
+	fprintf (file, "\t<img src=\"pictures/list_1.png\" style=\"width: 80%\">\n\n");
+
+	return NOT_ERROR;
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+error_t open_list_file (FILE** ptr_file)
+{
+	assert (ptr_file);
+
+	*ptr_file = fopen ("list.html", "w");
+
+	if (*ptr_file == NULL)
+	{
+		printf ("Not find 'list.dot'.\n");
+		return NOT_FIND_LIST_FILE;
+	}
+
+	fprintf (*ptr_file, "<pre>\n");
+
+	return NOT_ERROR;
+}
+
+error_t close_list_file (FILE* file)
+{
+	assert (file);
+
+	fprintf (file, "</pre>\n");
+
+	fclose (file);
 
 	return NOT_ERROR;
 }

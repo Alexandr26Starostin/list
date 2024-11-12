@@ -38,7 +38,8 @@ enum error_t
 	FEW_FILES               = 128,
 	NOT_FIND_LIST_DOT       = 256,
 	LIST_FULL               = 512,
-	NOT_ELEMENTS_IN_LIST    = 1024
+	NOT_ELEMENTS_IN_LIST    = 1024,
+	NOT_FIND_LIST_FILE      = 2048
 };
 
 //--------------------------------------------------------------------------------------------------------

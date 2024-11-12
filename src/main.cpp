@@ -7,31 +7,40 @@
 
 #define ADD_IN_LIST_(element, position) \
 	if (list_add (&list, element, position)) {return (int) list.list_error;} \
-	print_list (&list);                 \
-	status = list_dump (&list, "Add", (list.next)[position]); \
-	if (status) {return status;}        
+	print_list (&list, list_file);                 \
+	status = list_dump (&list, "Add", (list.next)[position], str_for_system, list_file); \
+	if (status) {close_list_file (list_file); list_dtor (&list); return status;}        
 
 #define REMOVE_FROM_LIST_(position) \
 	if (list_remove (&list, position)) {return (int) list.list_error;} \
-	status = list_dump (&list, "Remove", position); \
-	if (status) {return status;}     
+	print_list (&list, list_file);                 \
+	status = list_dump (&list, "Remove", position, str_for_system, list_file); \
+	if (status) {close_list_file (list_file); list_dtor (&list); return status;}     
 
 //-------------------------------------------------------------------------------------------------     
 
 int main () 
 {
 	list_t list = {};
+	
+	error_t status = NOT_ERROR;
+
+	FILE* list_file = NULL;
+
+	status = open_list_file (&list_file);
+	if (status) {return status;} 
 
 	if (list_ctor (&list))
 	{
 		list_dtor (&list);
+		close_list_file (list_file);
 		return (int) list.list_error;
 	}
 
-	error_t status = NOT_ERROR;
+	char str_for_system [] = "dot list.dot -Tpng -o pictures/list_1.png";
 
-	print_list (&list);
-	status = list_dump (&list, "Add", 0); 
+	print_list (&list, list_file);
+	status = list_dump (&list, "Add", 0, str_for_system, list_file); 
 	if (status) {return status;}
 
 	ADD_IN_LIST_(7,  0)
@@ -43,5 +52,6 @@ int main ()
 	REMOVE_FROM_LIST_(2)
 
 	list_dtor (&list);
+	close_list_file (list_file);
 	return (int) list.list_error;
 }
