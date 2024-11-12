@@ -96,7 +96,7 @@ digraph
 
 	subgraph
 	{
-		Remove_element[shape="rectangle", color = "orange", style="filled",fillcolor="orange"]
+		OPERATION[shape="rectangle", label = "Remove element in index = 2" color = "orange", style="filled",fillcolor="orange"]
 	}
 
 	

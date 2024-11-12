@@ -17,6 +17,8 @@ list_error_t print_list (list_t* ptr_list, FILE* file)
 		return ptr_list -> list_error;
 	}
 
+	fprintf (file, "--------------------------------------------------------------------------------\n\n");
+
 	fprintf (file, "      ");
 
 	for (size_t index_list = 0; index_list < SIZE_LIST; index_list++)
@@ -58,19 +60,18 @@ list_error_t print_list (list_t* ptr_list, FILE* file)
 	}
 	fprintf (file, "\n\n");
 
-	fprintf (file, "--------------------------------------------------------------------------------\n\n");
-
 	return ptr_list -> list_error;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-error_t list_dump (list_t* ptr_list, const char* operation, size_t target, char* str_for_system, FILE* file)
+error_t list_dump (list_t* ptr_list, const char* operation, size_t target, char* str_for_system, FILE* file, size_t* ptr_number_of_picture)
 {
 	assert (ptr_list);
 	assert (operation);
 	assert (str_for_system);
 	assert (file);
+	assert (ptr_number_of_picture);
 
 	if (list_error (ptr_list, __FILE__, __LINE__))
 	{
@@ -204,7 +205,7 @@ error_t list_dump (list_t* ptr_list, const char* operation, size_t target, char*
 	fprintf (dump_file, "edge[color=\"white\",fontsize=12]\n\n\t"
 						"subgraph\n\t{\n\t\t");
 
-	fprintf (dump_file, "%s_element[shape=\"rectangle\", color = \"orange\", style=\"filled\",fillcolor=\"orange\"]\n\t}\n\n\t", operation);
+	fprintf (dump_file, "OPERATION[shape=\"rectangle\", label = \"%s element in index = %ld\" color = \"orange\", style=\"filled\",fillcolor=\"orange\"]\n\t}\n\n\t", operation, target);
 
 	//--------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -216,7 +217,26 @@ error_t list_dump (list_t* ptr_list, const char* operation, size_t target, char*
 
 	system (str_for_system);
 
-	fprintf (file, "\t<img src=\"pictures/list_1.png\" style=\"width: 80%\">\n\n");
+	fprintf (file, "\t<img src=\"pictures/list_%c%c%c%c.png\" style=\"width: 80%\">\n\n", str_for_system[BEGIN_NUMBER_PICTURE], str_for_system[BEGIN_NUMBER_PICTURE+1], str_for_system[BEGIN_NUMBER_PICTURE+2], str_for_system[BEGIN_NUMBER_PICTURE+3]);
+
+	*ptr_number_of_picture += 1;
+	size_t save_value = *ptr_number_of_picture;
+
+	str_for_system[BEGIN_NUMBER_PICTURE]   = '0' + (char) ((*ptr_number_of_picture) / 1000);
+	*ptr_number_of_picture                %= 1000;
+
+	str_for_system[BEGIN_NUMBER_PICTURE+1] = '0' + (char) ((*ptr_number_of_picture) / 100);
+	*ptr_number_of_picture                %= 100;
+
+	str_for_system[BEGIN_NUMBER_PICTURE+2] = '0' + (char) ((*ptr_number_of_picture) / 10);
+	*ptr_number_of_picture                %= 10;
+
+	str_for_system[BEGIN_NUMBER_PICTURE+3] = '0' + (char) ((*ptr_number_of_picture) / 1);
+	*ptr_number_of_picture                %= 1;
+
+	*ptr_number_of_picture = save_value;
+
+	//str_for_system[BEGIN_NUMBER_PICTURE]
 
 	return NOT_ERROR;
 }

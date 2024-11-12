@@ -60,4 +60,6 @@ const long FREE_VALUE = -1;
 const size_t SIZE_FLAG          = 2;
 const size_t MAX_SIZE_NAME_FILE = 32;
 
+const size_t BEGIN_NUMBER_PICTURE = 36;
+
 #endif
